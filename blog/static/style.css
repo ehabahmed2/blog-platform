@@ -1,0 +1,92 @@
+body {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.hero-section {
+    background-color: #1f1f1f;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.footer {
+    background-color: #1f1f1f;
+}
+
+
+/* Gallery Section */
+.gallery-wrapper {
+    overflow: hidden; /* Only show 3 (or fewer, on smaller screens) items at a time */
+    width: 100%;
+    position: relative;
+  }
+  
+  .gallery {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .gallery-item {
+    flex: 0 0 33.33%; /* Show 3 items on larger screens */
+    margin-right: 1rem;
+    width: 70%;
+  }
+  
+
+.gallery img {
+    border-radius: 10px;
+    width: 100%;
+}
+
+button#gallery-prev, button#gallery-next {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button#gallery-prev:hover, button#gallery-next:hover {
+    background-color: #555;
+}
+
+button#gallery-prev {
+    left: -40px;
+}
+
+button#gallery-next {
+    right: -40px;
+}
+
+/* Responsive behavior */
+@media (max-width: 1200px) {
+    .gallery-item {
+        flex: 0 0 50%; /* Show 2 items on medium-sized screens */
+    }
+    button#gallery-next {
+        right: 15px;
+    }
+    button#gallery-prev {
+        left: -15px;
+        top: -50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-item {
+        flex: 0 0 100%; /* Show 1 item on smaller screens */
+    }
+    button#gallery-next {
+        right: 15px;
+    }
+    button#gallery-prev {
+        left: -15px;
+        top: -50px;
+    }
+}
+
+
+
+

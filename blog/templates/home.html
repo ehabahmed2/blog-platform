@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<!-- Header -->
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Ehab's Blog</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        User
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                        <a class="dropdown-item" href="#">Login</a>
+                        <a class="dropdown-item" href="#">Register</a>
+                        <a class="dropdown-item" href="#">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="hero-section text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Welcome to Houba's blog</h1>
+        <p class="lead">Your daily dose of amazing articles</p>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Hot Topics</h2>
+        <div class="position-relative">
+            <!-- Left Scroll Button -->
+            <button id="gallery-prev" class="btn btn-dark position-absolute top-50 start-0 translate-middle-y">⟨</button>
+
+            <!-- Gallery Content -->
+            <div class="gallery-wrapper overflow-hidden">
+                <div class="gallery d-flex">
+                    <!-- Example of a gallery card -->
+                    <div class="gallery-item">
+                        <div class="card bg-dark text-light">
+                            <img src="{% static "images/sample.webp" %}" class="card-img-top" alt="Topic Image">
+                            <div class="card-body">
+                                <h5 class="card-title">Topic Title</h5>
+                                <p class="card-text">Date of Post</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="card bg-dark text-light">
+                            <img src="{% static "images/sample.webp" %}" class="card-img-top" alt="Topic Image">
+                            <div class="card-body">
+                                <h5 class="card-title">Topic Title</h5>
+                                <p class="card-text">Date of Post</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="card bg-dark text-light">
+                            <img src="{% static "images/sample.webp" %}" class="card-img-top" alt="Topic Image">
+                            <div class="card-body">
+                                <h5 class="card-title">Topic Title</h5>
+                                <p class="card-text">Date of Post</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="card bg-dark text-light">
+                            <img src="{% static "images/sample.webp" %}" class="card-img-top" alt="Topic Image">
+                            <div class="card-body">
+                                <h5 class="card-title">Topic Title</h5>
+                                <p class="card-text">Date of Post</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add more gallery cards here -->
+                </div>
+            </div>
+
+            <!-- Right Scroll Button -->
+            <button id="gallery-next" class="btn btn-dark position-absolute top-50 end-0 translate-middle-y">⟩</button>
+        </div>
+    </div>
+</section>
+
+<!-- Main Section -->
+<section class="main-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Latest Posts</h2>
+        <div class="row">
+            <!-- Example of a post card -->
+            <div class="col-md-4">
+                <div class="card bg-dark text-light">
+                    <img src="{% static "images/sample.webp" %}" class="card-img-top" alt="Post Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Post Title</h5>
+                        <p class="card-text">Short description of the post.</p>
+                        <a href="#" class="btn btn-primary">View More</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Repeat for more cards -->
+        </div>
+        <!-- Pagination -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+</section>
+
+<!-- Category Section -->
+<section class="category-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Categories</h2>
+        <div class="row">
+            <!-- Example of a category card -->
+            <div class="col-md-4">
+                <div class="card bg-dark text-light">
+                    <img src="{% static "images/fit_hero.webp" %}" class="card-img-top" alt="Category Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Category Title</h5>
+                        <p class="card-text">Description of the category.</p>
+                        <p class="card-text"><small class="text-muted">Number of posts</small></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Repeat for more cards -->
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
