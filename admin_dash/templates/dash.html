@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            background-color: #2b2b2b;
+            border: none;
+        }
+        .card-header {
+            background-color: #4a4a4a;
+        }
+        .btn-custom {
+            background-color: #6a1b9a;
+            border: none;
+            color: #fff;
+            width: 100%;
+        }
+        .btn-custom:hover {
+            background-color: #4a148c;
+        }
+        .card-title {
+            color: #4db8ff;
+        }
+        .card-body {
+            text-align: center;
+        }
+</style>
+
+
+<!-- Hero Section -->
+<section class="hero-section text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Admin</h1>
+        <p class="lead">Admin Dashboard</p>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row justify-content-center">
+        {% if user.is_superuser %}
+        <div class="col-md-3 mb-3">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h3 class="card-title">Create Author</h3>
+                </div>
+                <div class="card-body">
+                    <a href="{% url "reg_author" %}" class="btn btn-custom">Go</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="col-md-3 mb-3">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h3 class="card-title">Manage Posts</h3>
+                </div>
+                <div class="card-body">
+                    <a href="#" class="btn btn-custom">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h3 class="card-title">Categories</h3>
+                </div>
+                <div class="card-body">
+                    <a href="#" class="btn btn-custom">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h3 class="card-title">Site Settings</h3>
+                </div>
+                <div class="card-body">
+                    <a href="#" class="btn btn-custom">Go</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .card {
+        background-color: #2b2b2b;
+        border: none;
+    }
+    .card-header {
+        background-color: #4a4a4a;
+    }
+    .btn-custom {
+        background-color: #6a1b9a;
+        border: none;
+        color: #fff;
+        width: 100%;
+    }
+    .btn-custom:hover {
+        background-color: #4a148c;
+    }
+    .card-title {
+        color: #4db8ff;
+    }
+    .card-body {
+        text-align: center;
+    }
+</style>
+<!-- Hero Section -->
+<section class="hero-section text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Create User</h1>
+        <p class="lead">Admin Dashboard</p>
+    </div>
+</section>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 mb-3">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h3 class="card-title">Create New Author</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url "reg_author" %}">
+                        {% csrf_token %}
+                        <!-- Loop over all form fields -->
+                        {% for field in form %}
+                        <div class="mb-3">
+                            <!-- If the field is a checkbox -->
+                            {% if field.field.widget.input_type == 'checkbox' %}
+                                <div class="form-check form-check-inline">
+                                    {{ field }}
+                                    <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {{ field.errors }}
+                                </div>
+                            <!-- Otherwise, treat it as a regular form control -->
+                            {% else %}
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                                {{ field.errors }}
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-custom">Create User</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
