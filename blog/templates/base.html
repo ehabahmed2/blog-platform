@@ -54,10 +54,12 @@
                             User
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                            <a class="dropdown-item" href="#">Login</a>
-                            <a class="dropdown-item" href="#">Register</a>
                             {% if user.is_authenticated %}
-                            <a class="dropdown-item" href="{% url "logout" %}">Logout</a>
+                            <a class="dropdown-item" href="">{{user.first_name}}</a>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                            {% else %}
+                            <a class="dropdown-item" href="{% url "login" %}">Login</a>
+                            <a class="dropdown-item" href="{% url "register" %}">Register</a>
                             {% endif %}
                         </div>
                     </li>
