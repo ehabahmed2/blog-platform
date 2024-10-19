@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .card {
+        background-color: #ffffff;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+    }
+    .card-header {
+        background-color: #4a4a4a;
+        color: #fff;
+    }
+    .btn-custom {
+        background-color: #3498db;
+        border: none;
+        color: #fff;
+    }
+    .btn-custom:hover {
+        background-color: #2980b9;
+    }
+    .btn-danger {
+        background-color: #e74c3c;
+        border: none;
+        color: #fff;
+    }
+    .btn-danger:hover {
+        background-color: #c0392b;
+    }
+    .table th, .table td {
+        vertical-align: middle;
+    }
+</style>
+<div class="container">
+    <h2>Manage Authors</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Active Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for author in authors %}
+                <tr>
+                    <td>{{ author.id }}</td>
+                    <td>{{ author.username }}</td>
+                    <td>{{ author.first_name }}</td>
+                    <td>{{ author.last_name }}</td>
+                    <td>{{ author.email }}</td>
+                    <td>{{ author.is_active }}</td>
+                    <td>
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="num" value={{author.id}}>
+                            <button type='submit' class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this author?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
