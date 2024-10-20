@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Create a Post</h2>
+    <form method='POST' action='' enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" name='title' id="title" placeholder="Enter post title">
+        </div>
+        <div class="form-group">
+            <label for="image">Image</label>
+            <input type="file" name='image' class="form-control-file" id="image">
+        </div>
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea class="form-control" name='content' id="content" rows="5" placeholder="Enter post content"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category" name='category'>
+                <option>News</option>
+                <option>Entertainment</option>
+                <option>Technology</option>
+                <option>Health</option>
+            </select>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox"name='publish' class="form-check-input" id="publish">
+            <label class="form-check-label" for="publish">Publish</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{% endblock content %}

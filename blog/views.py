@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate 
 from django.contrib import messages
 from .forms import CreateUser, LoginUser, UpdateProfile
-from .models import UserProfile
+from .models import UserProfile, CreatePost, Category
 from django.contrib.auth import get_user_model
 
 
@@ -18,7 +18,9 @@ from django.db import models
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html', {})
+    posts = CreatePost.objects.filter(publish=True)
+    categories = Category.objects.all()
+    return render(request, 'home.html', {'posts':posts, 'categories': categories})
 
 def register_user(request):
     if request.method == 'POST':
@@ -84,5 +86,33 @@ def user_profile(request):
         return redirect('home')
     return render(request, 'users/user_profile.html', {'form': form})
 
+
+# posts
+def create_post(request):
+    if request.user.is_staff:
+        if request.method == 'POST':
+            title = request.POST.get('title')
+            image = request.FILES.get('image')
+            content = request.POST.get('content')
+            category_title = request.POST.get('category')
+            publish = request.POST.get('publish') == 'on'
+            
+            # Retrieve the Category instance based on the title
+            category = Category.objects.get(title=category_title)
+            
+            # Check if an image was uploaded, otherwise use the default image
+            if not image:
+                image = 'Posts/imgs/default.jpg'
+            
+            
+            user = request.user
+            post = CreatePost(user=user, title=title, image=image, content=content, category=category, publish=publish)
+            post.save()
+            messages.success(request, 'Post created!')
+            return redirect('home')
+        return render(request, 'posts/create_post.html', {})
+    else:
+        messages.error(request, "Access Denied!")
+        return redirect('home')
 
 

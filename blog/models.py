@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
+import datetime
 # Create your models here.
 class Login(models.Model):
     email = models.EmailField()
@@ -30,5 +32,21 @@ def create_profile(sender, instance, created, **kwargs):
         user_profile = UserProfile.objects.get_or_create(user = instance)
         user_profile.save()
 
+class Category(models.Model):
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    title = models.CharField(max_length=255)
+    description = models.TextField(max_length=500)
+    image = models.ImageField(upload_to='Category/imgs/%y/%m/%d', default='category/imgs/default.jpg')
+    def __str__(self):
+        return self.title
 
-
+class CreatePost(models.Model):
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    title = models.CharField(max_length=255)
+    content = models.TextField(max_length=900000)
+    image = models.ImageField(upload_to='Posts/imgs/%y/%m/%d/', default='Posts/imgs/default.jpg')
+    publish = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=timezone.now) 
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.title
