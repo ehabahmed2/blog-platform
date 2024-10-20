@@ -10,5 +10,6 @@ urlpatterns = [
     path('profile/', views.user_profile, name='user_profile'),
     #posts
     path('create_post/', views.create_post, name='create_post'),
+    path('post/<int:pk>/', views.post, name='post'),
 
 ]

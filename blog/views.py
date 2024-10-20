@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate 
 from django.contrib import messages
 from .forms import CreateUser, LoginUser, UpdateProfile
-from .models import UserProfile, CreatePost, Category
+from .models import UserProfile, CreatePost, Category, Comments
 from django.contrib.auth import get_user_model
 
 
@@ -115,4 +115,14 @@ def create_post(request):
         messages.error(request, "Access Denied!")
         return redirect('home')
 
-
+def post(request, pk):
+    post = CreatePost.objects.get(id=pk)
+    
+    if request.method == 'POST':
+        user = request.user
+        text = request.POST.get('text')
+        comment = Comments(post=post, user=user, text=text)
+        comment.save()
+        return redirect('post', pk=post.id)    
+    comments = Comments.objects.all()
+    return render(request, 'posts/post.html', {'post': post, 'comments': comments})

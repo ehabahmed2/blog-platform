@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container mt-5">
+        <div class="card">
+            <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+            <div class="card-body">
+                <h1 class="card-title">{{ post.title }}</h1>
+                <p class="text-muted">By {{ post.user.username }} on {{ post.created_at }}</p>
+                <p><strong>Category:</strong> {{ post.category.title }}</p>
+                <p class="card-text" style="line-height: 1.6; margin-bottom: 15px;">{{ post.content|linebreaks }}</p>
+                <hr>
+                <h4>Comments</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="text">Add a Comment:</label>
+                        <textarea class="form-control" id="text" name="text" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                {% for comment in post.comments.all %}
+                <div class="media mb-3">
+                    <div class="media-body">
+                        <h5 class="mt-0">{{ comment.user.first_name }}</h5>
+                        <p>{{ comment.text }}</p>
+                        <p class="text-muted">Posted on {{ comment.created_at }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

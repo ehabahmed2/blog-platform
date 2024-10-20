@@ -81,7 +81,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{post.title}}</h5>
                         <p class="card-text">{{ post.content|truncatewords:20 }}</p>
-                        <a href="#" class="btn btn-primary">View More</a>
+                        <a href="{% url "post" post.id %}" class="btn btn-primary">View More</a>
                     </div>
                 </div>
             </div>
