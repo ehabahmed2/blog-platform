@@ -20,16 +20,16 @@ class UserProfile(models.Model):
     
     
     def __str__(self):
-        return self.user
+        return self.user.username
 
     class Meta:
         verbose_name = "User Profile"
         verbose_name_plural = "User Profiles"
 
-@receiver(post_save, sender=User) 
+@receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        user_profile = UserProfile.objects.get_or_create(user = instance)
+        user_profile = UserProfile.objects.create(user=instance)
         user_profile.save()
 
 class Category(models.Model):
@@ -58,3 +58,5 @@ class Comments(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f'Comment by {self.user.username} on {self.post.title}'
+
+

@@ -27,12 +27,15 @@ def register_user(request):
         form = CreateUser(request.POST)
         if form.is_valid():
             user = form.save()
+            print(f'This is the error: {type(user), user}')  # Add this line to check what is returned
             login(request, user)
             messages.success(request, 'Account created successfully!')
             return redirect('home')
     else:
         form = CreateUser()
+    
     return render(request, 'users/register.html', {'form': form})
+
 
 
 def login_user(request):
@@ -126,3 +129,4 @@ def post(request, pk):
         return redirect('post', pk=post.id)    
     comments = Comments.objects.all()
     return render(request, 'posts/post.html', {'post': post, 'comments': comments})
+
