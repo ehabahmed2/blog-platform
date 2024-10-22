@@ -21,43 +21,18 @@
             <!-- Gallery Content -->
             <div class="gallery-wrapper overflow-hidden">
                 <div class="gallery d-flex">
-                    <!-- Example of a gallery card -->
-                    <div class="gallery-item">
-                        <div class="card bg-dark text-light">
-                            <img src="{% static "images/sample.webp" %}" class="card-img-top" alt="Topic Image">
+                    <!-- gallery card -->
+                    {% for hot_post in hot_posts %}
+                    <div class="gallery-item col-md-4">
+                        <div class="card bg-dark text-light mb-4">
+                            <img src="{{ hot_post.image.url }}" class="card-img-top" alt="{{ hot_post.title }}">
                             <div class="card-body">
-                                <h5 class="card-title">Topic Title</h5>
-                                <p class="card-text">Date of Post</p>
+                                <h5 class="card-title"><a href="{% url 'post' hot_post.id %}">{{ hot_post.title }}</a></h5>
+                                <p class="text-muted">Views: {{ hot_post.views }}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="gallery-item">
-                        <div class="card bg-dark text-light">
-                            <img src="{% static "images/sample.webp" %}" class="card-img-top" alt="Topic Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Topic Title</h5>
-                                <p class="card-text">Date of Post</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <div class="card bg-dark text-light">
-                            <img src="{% static "images/sample.webp" %}" class="card-img-top" alt="Topic Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Topic Title</h5>
-                                <p class="card-text">Date of Post</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <div class="card bg-dark text-light">
-                            <img src="{% static "images/sample.webp" %}" class="card-img-top" alt="Topic Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Topic Title</h5>
-                                <p class="card-text">Date of Post</p>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                     <!-- Add more gallery cards here -->
                 </div>
             </div>
@@ -112,7 +87,7 @@
                 <div class="card bg-dark text-light">
                     <img src="{{ category.image.url }}" class="card-img-top" alt="Category Image">
                     <div class="card-body">
-                        <h5 class="card-title">{{ category.title }}</h5>
+                        <h5 class="card-title"><a href="{% url 'category_posts' category.id %}">{{ category.title }}</a></h5>
                         <p class="card-text">{{ category.description |truncatewords:20 }}</p>
                         <p class="card-text"><small class="text-muted">1</small></p>
                     </div>

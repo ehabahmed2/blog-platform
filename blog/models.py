@@ -48,6 +48,7 @@ class CreatePost(models.Model):
     publish = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now) 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    views = models.IntegerField(default=0)
     def __str__(self):
         return self.title
 

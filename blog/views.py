@@ -1,11 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate 
 from django.contrib import messages
 from .forms import CreateUser, LoginUser, UpdateProfile
 from .models import UserProfile, CreatePost, Category, Comments
 from django.contrib.auth import get_user_model
 from admin_dash.models import CustomUser
-
 
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
@@ -21,7 +20,9 @@ from django.db import models
 def home(request):
     posts = CreatePost.objects.filter(publish=True)
     categories = Category.objects.all()
-    return render(request, 'home.html', {'posts':posts, 'categories': categories})
+    
+    hot_posts = CreatePost.objects.filter(publish=True).order_by('-views')
+    return render(request, 'home.html', {'posts':posts, 'categories': categories, 'hot_posts': hot_posts})
 
 def register_user(request):
     if request.method == 'POST':
@@ -120,19 +121,23 @@ def create_post(request):
         return redirect('home')
 
 def post(request, pk):
-    post = CreatePost.objects.get(id=pk)
-    
+    post = get_object_or_404(CreatePost, id=pk)
+    post.views += 1
+    post.save()
+
     if request.method == 'POST':
         user = request.user
         if user.is_authenticated:
             text = request.POST.get('text')
             comment = Comments(post=post, user=user, text=text)
             comment.save()
-            return redirect('post', pk=post.id)   
+            return redirect('post', pk=post.id)
         else:
-            messages.info(request, 'Kindly log in to leave a comment!') 
+            messages.info(request, 'Kindly log in to leave a comment!')
             return redirect('login')
-    comments = Comments.objects.all()
+
+    comments = Comments.objects.filter(post=post)
+
     return render(request, 'posts/post.html', {'post': post, 'comments': comments})
 
 
@@ -210,3 +215,5 @@ def category_posts(request, pk):
     category = Category.objects.get(id=pk)
     posts = CreatePost.objects.filter(category=category)
     return render(request, 'categories/category_posts.html', {'category': category,'posts': posts})
+
+
