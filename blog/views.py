@@ -4,6 +4,7 @@ from django.contrib import messages
 from .forms import CreateUser, LoginUser, UpdateProfile
 from .models import UserProfile, CreatePost, Category, Comments
 from django.contrib.auth import get_user_model
+from admin_dash.models import CustomUser
 
 
 from django.contrib.auth.forms import PasswordChangeForm
@@ -123,10 +124,80 @@ def post(request, pk):
     
     if request.method == 'POST':
         user = request.user
-        text = request.POST.get('text')
-        comment = Comments(post=post, user=user, text=text)
-        comment.save()
-        return redirect('post', pk=post.id)    
+        if user.is_authenticated:
+            text = request.POST.get('text')
+            comment = Comments(post=post, user=user, text=text)
+            comment.save()
+            return redirect('post', pk=post.id)   
+        else:
+            messages.info(request, 'Kindly log in to leave a comment!') 
+            return redirect('login')
     comments = Comments.objects.all()
     return render(request, 'posts/post.html', {'post': post, 'comments': comments})
+
+
+def manage_posts(request):
+    user = request.user
+    if user.is_staff:
+        authors = CustomUser.objects.filter(is_staff=True)
+        
+        #filter the posts by authors
+        author_id = request.GET.get('author')
+        if author_id:
+            posts = CreatePost.objects.filter(user_id=author_id)
+        else: 
+            posts = CreatePost.objects.all()
+            
+        # delete, publish and archive posts
+        if request.method == 'POST':
+            action = request.POST.get('action')
+            post_id = request.POST.get('post_id')
+            post = CreatePost.objects.get(id=post_id)
+            if action =='delete':
+                post.delete()
+                messages.success(request, 'Post deleted succeffully!')
+            elif action == 'archive':
+                post.publish = False
+                post.save()
+                messages.success(request, 'Post archived succeffully!')
+            elif action == 'publish':
+                post.publish = True
+                post.save()
+                messages.success(request, 'Post published succeffully!')
+            return redirect('manage_posts')
+
+    else:
+        messages.error(request,'Access denied!')
+        return redirect('home')
+    return render(request, 'posts/manage_posts.html', {'authors': authors, 'posts': posts})
+
+def edit_post(request, pk):
+    post = CreatePost.objects.get(id=pk)
+    user = request.user
+    
+    if user.is_staff: 
+        if request.method == 'POST':
+            title = request.POST.get('title')
+            image = request.FILES.get('image')
+            content = request.POST.get('content')
+            category_title = request.POST.get('category')
+            publish = request.POST.get('publish') == 'on'
+            
+            # Retrieve the Category instance based on the title
+            category = Category.objects.get(title=category_title)
+            
+            # Update post fields
+            post.title = title
+            post.content = content
+            post.category = category
+            post.publish = publish
+            if image:
+                post.image = image
+            post.save()
+            messages.success(request, 'Post updated successfully!')
+            return redirect('manage_posts')
+    else: 
+        messages.error(request, 'Access denied')
+        return redirect('home')
+    return render(request, 'posts/edit_post.html', {'post': post})
 
