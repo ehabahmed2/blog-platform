@@ -13,5 +13,7 @@ urlpatterns = [
     path('post/<int:pk>/', views.post, name='post'),
     path('manage-posts/', views.manage_posts, name='manage_posts'),
     path('edit-post/<int:pk>', views.edit_post, name='edit_post'),
-    
+    #categories
+    path('categories', views.all_categories, name='all_categories'),
+    path('categories/<int:pk>/', views.category_posts, name='category_posts'),
 ]

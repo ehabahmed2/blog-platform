@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Posts in {{ category.title }}</h1>
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'post' post.id %}">{{ post.title }}</a></h5>
+                    <p class="card-text">{{ post.content|truncatewords:20 }}</p>
+                    <a href="{% url 'post' post.id %}" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

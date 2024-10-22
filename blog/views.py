@@ -172,6 +172,7 @@ def manage_posts(request):
     return render(request, 'posts/manage_posts.html', {'authors': authors, 'posts': posts})
 
 def edit_post(request, pk):
+    
     post = CreatePost.objects.get(id=pk)
     user = request.user
     
@@ -201,3 +202,11 @@ def edit_post(request, pk):
         return redirect('home')
     return render(request, 'posts/edit_post.html', {'post': post})
 
+def all_categories(request):
+    categories = Category.objects.all()
+    return render(request, 'categories/all_categories.html', { 'categories': categories })
+
+def category_posts(request, pk):
+    category = Category.objects.get(id=pk)
+    posts = CreatePost.objects.filter(category=category)
+    return render(request, 'categories/category_posts.html', {'category': category,'posts': posts})
