@@ -11,6 +11,7 @@ urlpatterns = [
     #posts
     path('create-post/', views.create_post, name='create_post'),
     path('post/<int:pk>/', views.post, name='post'),
+    path('posts/', views.all_posts, name='posts'),
     path('manage-posts/', views.manage_posts, name='manage_posts'),
     path('edit-post/<int:pk>', views.edit_post, name='edit_post'),
     #categories

@@ -8,6 +8,7 @@ from admin_dash.models import CustomUser
 
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.core.paginator import Paginator
 
 
 
@@ -18,11 +19,18 @@ from django.db import models
 
 # Create your views here.
 def home(request):
-    posts = CreatePost.objects.filter(publish=True)
+    posts = CreatePost.objects.filter(publish=True).order_by('-created_at')[:6]
     categories = Category.objects.all()
     
     hot_posts = CreatePost.objects.filter(publish=True).order_by('-views')
     return render(request, 'home.html', {'posts':posts, 'categories': categories, 'hot_posts': hot_posts})
+
+def all_posts(request):
+    posts = CreatePost.objects.filter(publish=True)
+    paginator = Paginator(posts, 12)  # Show 12 posts per page
+    page_number = request.GET.get('page')
+    posts = paginator.get_page(page_number)
+    return render(request, 'posts/all_posts.html', {'posts': posts})
 
 def register_user(request):
     if request.method == 'POST':
