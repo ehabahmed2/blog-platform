@@ -50,7 +50,7 @@
         <!-- Search Field -->
         <div class="row mb-5">
             <div class="col-12">
-                <form method="GET" action="">
+                <form method="GET" action="{% url "searched" %}">
                     <div class="input-group" style="max-width: 300px; margin: auto;">
                         <input type="text" class="form-control" placeholder="Search for Articles..." name='searched'>
                         <button class="btn btn-outline-secondary" type="submit">Search</button>
@@ -76,7 +76,7 @@
         </div>
         <!-- Button to view all posts -->
         <div class="text-center mt-4">
-            <a href="" class="btn btn-lg btn-dark">View All Posts</a>
+            <a href="{% url "posts" %}" class="btn btn-lg btn-dark">View All Posts</a>
         </div>
     </div>
 </section>
