@@ -5,6 +5,7 @@ from .forms import CreateUser, LoginUser, UpdateProfile
 from .models import UserProfile, CreatePost, Category, Comments
 from django.contrib.auth import get_user_model
 from admin_dash.models import CustomUser
+from django.db.models import Q
 
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
@@ -224,4 +225,13 @@ def category_posts(request, pk):
     posts = CreatePost.objects.filter(category=category)
     return render(request, 'categories/category_posts.html', {'category': category,'posts': posts})
 
+def search(request):
+    if request.GET:
+        search = request.GET['searched']
+        searched = CreatePost.objects.filter(Q(title__icontains=search) | Q(content__icontains=search))
+        if not searched:
+            messages.info(request, "No results found :(")
+        return render(request, 'posts/search.html', {'searched':searched})
+    else:
+        return render(request, 'posts/search.html', {})
 

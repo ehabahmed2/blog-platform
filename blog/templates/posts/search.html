@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<!-- Hero Section -->
+<section class="hero-section text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Search For Articles</h1>
+        <p class="lead">Looking for something!</p>
+    </div>
+</section>
+
+
+<!-- Main Section -->
+<section class="main-section py-5">
+    <div class="container">
+        <!-- Search Field -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <form method="GET" action="">
+                    <div class="input-group" style="width: 80%; margin: auto;">
+                        <input type="text" class="form-control" placeholder="Search for Articles..." name='searched'>
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <h2 class="text-center mb-4">Results</h2>
+        <div class="row">
+            <!-- Example of a post card -->
+            {% for post in searched %}
+            <div class="col-md-4">
+                <div class="card bg-dark text-light">
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href='{% url "post" post.id %}'>{{post.title}}</a></h5>
+                        <p class="card-text">{{ post.content|truncatewords:20 }}</p>
+                        <a href="{% url "post" post.id %}" class="btn btn-primary">View More</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- Repeat for more cards -->
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

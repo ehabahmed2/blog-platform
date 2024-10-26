@@ -47,6 +47,17 @@
 <section class="main-section py-5">
     <div class="container">
         <h2 class="text-center mb-4">Latest Posts</h2>
+        <!-- Search Field -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <form method="GET" action="">
+                    <div class="input-group" style="max-width: 300px; margin: auto;">
+                        <input type="text" class="form-control" placeholder="Search for Articles..." name='searched'>
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="row">
             <!-- Example of a post card -->
             {% for post in posts %}
