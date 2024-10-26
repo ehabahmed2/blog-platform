@@ -235,3 +235,14 @@ def search(request):
     else:
         return render(request, 'posts/search.html', {})
 
+def about(request):
+    return render(request, 'about.html', {})
+
+def contact(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        messages.success(request, f'Message sent successfully, {name}!')
+        return redirect('home')
+    return render(request, 'contact/contact.html', {})
+
+
