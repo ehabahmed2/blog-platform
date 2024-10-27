@@ -24,11 +24,7 @@ This project is a Django-based blog platform that provides an admin dashboard fo
 2. **Authors**: Authors are limited to creating, editing, and managing their own posts.
 3. **Users**: Regular users can view blog posts but have no content creation permissions.
 
-## Installation (for reference)
-1. **Clone this project**: Download the source code to your environment.
-2. **Setup a Virtual Environment**: Install dependencies from `requirements.txt`.
-3. **Database Migration**: Run migrations to set up the database schema.
-4. **Create Superuser**: Run `python manage.py createsuperuser` to access the admin dashboard.
+dashboard.
 5. **Run Server**: Start the server using `python manage.py runserver`.
 
 This platform ensures a seamless blog experience with a clear distinction between user roles and features, aimed at secure and dynamic content management.
